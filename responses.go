@@ -12,6 +12,11 @@ import (
 	"github.com/google/uuid"
 )
 
+func prettify(i interface{}) string {
+	resp, _ := json.MarshalIndent(i, "", "   ")
+	return string(resp)
+}
+
 type SuzakuResponse struct {
 	Code      int         `json:"code"`
 	Message   string      `json:"message"`
@@ -19,7 +24,11 @@ type SuzakuResponse struct {
 	RequestId uuid.UUID   `json:"request_id"`
 }
 
-type poolResponse struct {
+func (s SuzakuResponse) String() string {
+	return prettify(s)
+}
+
+type RetrievePoolResponse struct {
 	Name                string `json:"name"`
 	CreateTime          string `json:"create_time"`
 	EcRatio             string `json:"ec_ratio"`
@@ -30,25 +39,6 @@ type poolResponse struct {
 	SectorSize          int    `json:"sector_size"`
 	Split               int    `json:"split"`
 }
-
-type ListPoolResponse []poolResponse
-
-func prettify(i interface{}) string {
-	resp, _ := json.MarshalIndent(i, "", "   ")
-	return string(resp)
-}
-
-func (l ListPoolResponse) String() string {
-	return prettify(l)
-}
-
-type CreatePoolResponse poolResponse
-
-func (c CreatePoolResponse) String() string {
-	return prettify(c)
-}
-
-type RetrievePoolResponse poolResponse
 
 func (r RetrievePoolResponse) String() string {
 	return prettify(r)
@@ -75,6 +65,10 @@ type subsysVolume struct {
 	VolumeName     string `json:"volume_name"`
 }
 
+func (s subsysVolume) String() string {
+	return prettify(s)
+}
+
 type subsysResponse struct {
 	NVMeoF     string         `json:"NVMeoF"`
 	SCSIID     string         `json:"SCSI_ID"`
@@ -87,11 +81,11 @@ type subsysResponse struct {
 	VolList    []subsysVolume `json:"vol_list"`
 }
 
-type CreateSubsysResponse = subsysResponse
+func (s subsysResponse) String() string {
+	return prettify(s)
+}
 
-type ListSubsysResponse []subsysResponse
-
-type RetrieveSubsysResponse subsysResponse
+type RetrieveSubsysResponse = subsysResponse
 
 type volumeResponse struct {
 	Capacity       int    `json:"capacity"`
@@ -107,6 +101,10 @@ type volumeResponse struct {
 	VolumeName     string `json:"volume_name"`
 }
 
+func (s volumeResponse) String() string {
+	return prettify(s)
+}
+
 type RetrieveVolumeResponse = volumeResponse
 
 type ListVolumeResponse []volumeResponse
@@ -115,8 +113,16 @@ type RetrieveSubsysAuthResponse struct {
 	Auth string `json:"auth"`
 }
 
+func (r RetrieveSubsysAuthResponse) String() string {
+	return prettify(r)
+}
+
 type RetrieveSubsysChapResponse struct {
 	Chap string `json:"chap"`
+}
+
+func (r RetrieveSubsysChapResponse) String() string {
+	return prettify(r)
 }
 
 type flattenVolumeResponse struct {
@@ -124,11 +130,15 @@ type flattenVolumeResponse struct {
 	TaskId string `json:"task_id"`
 }
 
-func (resp *flattenVolumeResponse) IsDone() bool {
-	if resp.Status == "success" {
+func (f *flattenVolumeResponse) IsDone() bool {
+	if f.Status == "success" {
 		return true
 	}
 	return false
+}
+
+func (f flattenVolumeResponse) String() string {
+	return prettify(f)
 }
 
 type FlattenVolumeResponse = flattenVolumeResponse
@@ -144,9 +154,13 @@ type snapshotDesc struct {
 	SnapshotName string `json:"snapshot_name"`
 }
 
-type CreateSnapshotResponse snapshotDesc
+func (s snapshotDesc) String() string {
+	return prettify(s)
+}
 
-type RetrieveSnapshotResponse snapshotDesc
+type CreateSnapshotResponse = snapshotDesc
+
+type RetrieveSnapshotResponse = snapshotDesc
 
 type snapshotSummary struct {
 	Size         int    `json:"size"`
@@ -156,11 +170,19 @@ type snapshotSummary struct {
 	SnapshotName string `json:"snapshot_name"`
 }
 
+func (s snapshotSummary) String() string {
+	return prettify(s)
+}
+
 type ListSnapshotResponse []snapshotSummary
 
 type accountInfo struct {
 	AccountName string `json:"account_name"`
 	Password    string `json:"password"`
+}
+
+func (a accountInfo) String() string {
+	return prettify(a)
 }
 
 type ListAccountResponse []accountInfo
@@ -173,6 +195,10 @@ type groupInfo struct {
 	GroupName string            `json:"group_name"`
 	ISCSI     map[string]string `json:"iSCSI"`
 	NVMeoF    map[string]string `json:"NVMeoF"`
+}
+
+func (g groupInfo) String() string {
+	return prettify(g)
 }
 
 type ListGroupResponse []groupInfo
