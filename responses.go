@@ -85,6 +85,10 @@ func (s subsysResponse) String() string {
 	return prettify(s)
 }
 
+type CreateSubsysResponse = subsysResponse
+
+type ListSubsysResponse []subsysResponse
+
 type RetrieveSubsysResponse = subsysResponse
 
 type volumeResponse struct {
