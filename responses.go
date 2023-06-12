@@ -24,7 +24,7 @@ type SuzakuResponse struct {
 	RequestId uuid.UUID   `json:"request_id"`
 }
 
-func (s SuzakuResponse) String() string {
+func (s *SuzakuResponse) String() string {
 	return prettify(s)
 }
 
@@ -40,7 +40,7 @@ type RetrievePoolResponse struct {
 	Split               int    `json:"split"`
 }
 
-func (r RetrievePoolResponse) String() string {
+func (r *RetrievePoolResponse) String() string {
 	return prettify(r)
 }
 
@@ -65,7 +65,7 @@ type subsysVolume struct {
 	VolumeName     string `json:"volume_name"`
 }
 
-func (s subsysVolume) String() string {
+func (s *subsysVolume) String() string {
 	return prettify(s)
 }
 
@@ -81,7 +81,7 @@ type subsysResponse struct {
 	VolList    []subsysVolume `json:"vol_list"`
 }
 
-func (s subsysResponse) String() string {
+func (s *subsysResponse) String() string {
 	return prettify(s)
 }
 
@@ -92,7 +92,7 @@ type ListSubsysResponse []subsysResponse
 type RetrieveSubsysResponse = subsysResponse
 
 type volumeResponse struct {
-	Capacity       int    `json:"capacity"`
+	Capacity       int64  `json:"capacity"`
 	ReplicaNum     int    `json:"replica_num"`
 	SectorSize     int    `json:"sector_size"`
 	CloneStatus    string `json:"clone_status"`
@@ -101,11 +101,11 @@ type volumeResponse struct {
 	Format         string `json:"format"`
 	PoolName       string `json:"pool_name"`
 	RedundancyType string `json:"redundancy_type"`
-	Uuid           string `json:"uuid"`
+	UUID           string `json:"uuid"`
 	VolumeName     string `json:"volume_name"`
 }
 
-func (s volumeResponse) String() string {
+func (s *volumeResponse) String() string {
 	return prettify(s)
 }
 
@@ -117,7 +117,7 @@ type RetrieveSubsysAuthResponse struct {
 	Auth string `json:"auth"`
 }
 
-func (r RetrieveSubsysAuthResponse) String() string {
+func (r *RetrieveSubsysAuthResponse) String() string {
 	return prettify(r)
 }
 
@@ -125,7 +125,7 @@ type RetrieveSubsysChapResponse struct {
 	Chap string `json:"chap"`
 }
 
-func (r RetrieveSubsysChapResponse) String() string {
+func (r *RetrieveSubsysChapResponse) String() string {
 	return prettify(r)
 }
 
@@ -141,7 +141,7 @@ func (f *flattenVolumeResponse) IsDone() bool {
 	return false
 }
 
-func (f flattenVolumeResponse) String() string {
+func (f *flattenVolumeResponse) String() string {
 	return prettify(f)
 }
 
@@ -150,15 +150,15 @@ type FlattenVolumeResponse = flattenVolumeResponse
 type FlattenVolumeProgressResponse = flattenVolumeResponse
 
 type snapshotDesc struct {
-	Size         int    `json:"size"`
-	Used         int    `json:"used"`
+	Size         int64  `json:"size"`
+	Used         int64  `json:"used"`
 	Reference    int    `json:"reference"`
 	CreateTime   string `json:"create_time"`
 	VolumeName   string `json:"volume_name"`
 	SnapshotName string `json:"snapshot_name"`
 }
 
-func (s snapshotDesc) String() string {
+func (s *snapshotDesc) String() string {
 	return prettify(s)
 }
 
@@ -167,14 +167,14 @@ type CreateSnapshotResponse = snapshotDesc
 type RetrieveSnapshotResponse = snapshotDesc
 
 type snapshotSummary struct {
-	Size         int    `json:"size"`
+	Size         int64  `json:"size"`
 	Reference    int    `json:"reference"`
 	CreateTime   string `json:"create_time"`
 	VolumeName   string `json:"volume_name"`
 	SnapshotName string `json:"snapshot_name"`
 }
 
-func (s snapshotSummary) String() string {
+func (s *snapshotSummary) String() string {
 	return prettify(s)
 }
 
@@ -185,7 +185,7 @@ type accountInfo struct {
 	Password    string `json:"password"`
 }
 
-func (a accountInfo) String() string {
+func (a *accountInfo) String() string {
 	return prettify(a)
 }
 
@@ -201,7 +201,7 @@ type groupInfo struct {
 	NVMeoF    map[string]string `json:"NVMeoF"`
 }
 
-func (g groupInfo) String() string {
+func (g *groupInfo) String() string {
 	return prettify(g)
 }
 
