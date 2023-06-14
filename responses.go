@@ -91,7 +91,7 @@ type ListSubsysResponse []subsysResponse
 
 type RetrieveSubsysResponse = subsysResponse
 
-type volumeResponse struct {
+type volumeSummaryResponse struct {
 	Capacity       int64  `json:"capacity"`
 	ReplicaNum     int    `json:"replica_num"`
 	SectorSize     int    `json:"sector_size"`
@@ -105,13 +105,36 @@ type volumeResponse struct {
 	VolumeName     string `json:"volume_name"`
 }
 
-func (s *volumeResponse) String() string {
+func (s *volumeSummaryResponse) String() string {
 	return prettify(s)
 }
 
-type RetrieveVolumeResponse = volumeResponse
+type ListVolumeResponse []volumeSummaryResponse
 
-type ListVolumeResponse []volumeResponse
+type RetrieveVolumeResponse struct {
+	Bps            int    `json:"bps"`
+	BpsBurst       int    `json:"bps_burst"`
+	BurstPeriod    int    `json:"burst_period"`
+	Capacity       int64  `json:"capacity"`
+	CloneStatus    string `json:"clone_status"`
+	CreateTime     string `json:"create_time"`
+	EcRatio        string `json:"ec_ratio"`
+	Format         string `json:"format"`
+	Iops           int    `json:"iops"`
+	IopsBurst      int    `json:"iops_burst"`
+	PoolName       string `json:"pool_name"`
+	RedundancyType string `json:"redundancy_type"`
+	ReplicaNum     int    `json:"replica_num"`
+	SectorSize     int    `json:"sector_size"`
+	Sharding       string `json:"sharding"`
+	Used           int64  `json:"used"`
+	UUID           string `json:"uuid"`
+	VolumeName     string `json:"volume_name"`
+}
+
+func (r *RetrieveVolumeResponse) String() string {
+	return prettify(r)
+}
 
 type RetrieveSubsysAuthResponse struct {
 	Auth string `json:"auth"`
