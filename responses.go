@@ -28,7 +28,7 @@ func (s *SuzakuResponse) String() string {
 	return prettify(s)
 }
 
-type RetrievePoolResponse struct {
+type RetrievePool struct {
 	Name                string `json:"name"`
 	CreateTime          string `json:"create_time"`
 	EcRatio             string `json:"ec_ratio"`
@@ -40,7 +40,7 @@ type RetrievePoolResponse struct {
 	Split               int    `json:"split"`
 }
 
-func (r *RetrievePoolResponse) String() string {
+func (r *RetrievePool) String() string {
 	return prettify(r)
 }
 
@@ -85,11 +85,16 @@ func (s *subsysResponse) String() string {
 	return prettify(s)
 }
 
-type CreateSubsysResponse = subsysResponse
+type CreateSubsys = subsysResponse
 
-type ListSubsysResponse []subsysResponse
+type ListSubsys []subsysResponse
 
-type RetrieveSubsysResponse = subsysResponse
+type RetrieveSubsys = subsysResponse
+
+type RetrieveSubsysVLAN struct {
+	Subsys   string   `json:"subsys"`
+	VLANList []string `json:"vlan_list"`
+}
 
 type volumeSummaryResponse struct {
 	Capacity       int64  `json:"capacity"`
@@ -109,9 +114,9 @@ func (s *volumeSummaryResponse) String() string {
 	return prettify(s)
 }
 
-type ListVolumeResponse []volumeSummaryResponse
+type ListVolume []volumeSummaryResponse
 
-type RetrieveVolumeResponse struct {
+type RetrieveVolume struct {
 	Bps            int    `json:"bps"`
 	BpsBurst       int    `json:"bps_burst"`
 	BurstPeriod    int    `json:"burst_period"`
@@ -132,23 +137,25 @@ type RetrieveVolumeResponse struct {
 	VolumeName     string `json:"volume_name"`
 }
 
-func (r *RetrieveVolumeResponse) String() string {
+func (r *RetrieveVolume) String() string {
 	return prettify(r)
 }
 
-type RetrieveSubsysAuthResponse struct {
-	Auth string `json:"auth"`
+type RetrieveSubsysHostGroup struct {
+	HostGroup string `json:"host_group"`
+	Subsys    string `json:"subsys"`
 }
 
-func (r *RetrieveSubsysAuthResponse) String() string {
+func (r *RetrieveSubsysHostGroup) String() string {
 	return prettify(r)
 }
 
-type RetrieveSubsysChapResponse struct {
-	Chap string `json:"chap"`
+type RetrieveSubsysChap struct {
+	Chap   string `json:"chap"`
+	Subsys string `json:"subsys"`
 }
 
-func (r *RetrieveSubsysChapResponse) String() string {
+func (r *RetrieveSubsysChap) String() string {
 	return prettify(r)
 }
 
@@ -168,9 +175,9 @@ func (f *flattenVolumeResponse) String() string {
 	return prettify(f)
 }
 
-type FlattenVolumeResponse = flattenVolumeResponse
+type FlattenVolume = flattenVolumeResponse
 
-type FlattenVolumeProgressResponse = flattenVolumeResponse
+type FlattenVolumeProgress = flattenVolumeResponse
 
 type snapshotDesc struct {
 	Size         int64  `json:"size"`
@@ -185,9 +192,9 @@ func (s *snapshotDesc) String() string {
 	return prettify(s)
 }
 
-type CreateSnapshotResponse = snapshotDesc
+type CreateSnapshot snapshotDesc
 
-type RetrieveSnapshotResponse = snapshotDesc
+type RetrieveSnapshot = snapshotDesc
 
 type snapshotSummary struct {
 	Size         int64  `json:"size"`
@@ -201,39 +208,37 @@ func (s *snapshotSummary) String() string {
 	return prettify(s)
 }
 
-type ListSnapshotResponse []snapshotSummary
+type ListSnapshot []snapshotSummary
 
 type accountInfo struct {
 	AccountName string `json:"account_name"`
-	Password    string `json:"password"`
+	CreateTime  string `json:"create_time"`
 }
 
 func (a *accountInfo) String() string {
 	return prettify(a)
 }
 
-type ListAccountResponse []accountInfo
+type ListAccount []accountInfo
 
-type RetrieveAccountResponse accountInfo
+type RetrieveAccount accountInfo
 
-type CreateAccountResponse accountInfo
+type CreateAccount accountInfo
 
-type groupInfo struct {
+type hostGroupInfo struct {
 	GroupName string            `json:"group_name"`
 	ISCSI     map[string]string `json:"iSCSI"`
 	NVMeoF    map[string]string `json:"NVMeoF"`
 }
 
-func (g *groupInfo) String() string {
+func (g *hostGroupInfo) String() string {
 	return prettify(g)
 }
 
-type ListGroupResponse []groupInfo
+type ListHostGroup []hostGroupInfo
 
-type RetrieveGroupResponse groupInfo
+type ListSubsysOfHostGroup []string
 
-type CreateGroupResponse groupInfo
+type AddHostToHostGroup hostGroupInfo
 
-type AddQualifierToGroupResponse groupInfo
-
-type RemoveQualifierFromGroupResponse groupInfo
+type RemoveHostFromHostGroup hostGroupInfo
