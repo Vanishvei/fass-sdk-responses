@@ -105,7 +105,17 @@ func (s *subsysResponse) String() string {
 
 type CreateSubsys = subsysResponse
 
-type ListSubsys []subsysResponse
+type ListSubsys struct {
+	Data     []subsysResponse `json:"data"`
+	PageNum  int              `json:"page_num"`
+	PageSize int              `json:"page_size"`
+	Total    int              `json:"total"`
+	Token    string           `json:"token"`
+}
+
+func (ls *ListSubsys) String() string {
+	return prettify(ls)
+}
 
 type RetrieveSubsys = subsysResponse
 
@@ -115,79 +125,61 @@ type RetrieveSubsysVLAN struct {
 }
 
 type volumeSummaryResponse struct {
-	Capacity       int64   `json:"capacity"`
-	ReplicaNum     int     `json:"replica_num"`
-	SectorSize     int     `json:"sector_size"`
-	CloneStatus    string  `json:"clone_status"`
-	CreateTime     string  `json:"create_time"`
-	EcRatio        string  `json:"ec_ratio"`
-	Format         string  `json:"format"`
-	PoolName       string  `json:"pool_name"`
-	VolumeName     string  `json:"volume_name"`
-	RedundancyType string  `json:"redundancy_type"`
-	UUID           string  `json:"uuid"`
-	Used           *int64  `json:"used"`
-	BurstPeriod    *int    `json:"burst_period"`
-	IopsBurst      *int    `json:"iops_burst"`
-	BpsBurst       *int    `json:"bps_burst"`
-	Iops           *int    `json:"iops"`
-	Bps            *int    `json:"bps"`
-	Sharding       *string `json:"sharding"`
+	ReplicaNum     int    `json:"replica_num"`
+	SectorSize     int    `json:"sector_size"`
+	BurstPeriod    int    `json:"burst_period"`
+	IopsBurst      int    `json:"iops_burst"`
+	BpsBurst       int    `json:"bps_burst"`
+	Iops           int    `json:"iops"`
+	Bps            int    `json:"bps"`
+	Used           int64  `json:"used"`
+	Capacity       int64  `json:"capacity"`
+	UUID           string `json:"uuid"`
+	Format         string `json:"format"`
+	EcRatio        string `json:"ec_ratio"`
+	Sharding       string `json:"sharding"`
+	PoolName       string `json:"pool_name"`
+	VolumeName     string `json:"volume_name"`
+	CreateTime     string `json:"create_time"`
+	CloneStatus    string `json:"clone_status"`
+	RedundancyType string `json:"redundancy_type"`
 }
 
 func (s *volumeSummaryResponse) String() string {
-	if s.Used != nil {
-		prettify(s)
-	}
-
-	return prettify(struct {
-		Capacity       int64  `json:"capacity"`
-		ReplicaNum     int    `json:"replica_num"`
-		SectorSize     int    `json:"sector_size"`
-		CloneStatus    string `json:"clone_status"`
-		CreateTime     string `json:"create_time"`
-		EcRatio        string `json:"ec_ratio"`
-		Format         string `json:"format"`
-		PoolName       string `json:"pool_name"`
-		VolumeName     string `json:"volume_name"`
-		RedundancyType string `json:"redundancy_type"`
-		UUID           string `json:"uuid"`
-	}{
-		Capacity:       s.Capacity,
-		ReplicaNum:     s.ReplicaNum,
-		SectorSize:     s.SectorSize,
-		CloneStatus:    s.CloneStatus,
-		CreateTime:     s.CreateTime,
-		EcRatio:        s.EcRatio,
-		Format:         s.Format,
-		PoolName:       s.PoolName,
-		VolumeName:     s.VolumeName,
-		RedundancyType: s.RedundancyType,
-		UUID:           s.UUID,
-	})
+	return prettify(s)
 }
 
-type ListVolume []volumeSummaryResponse
+type ListVolume struct {
+	Data     []volumeSummaryResponse `json:"data"`
+	PageNum  int                     `json:"page_num"`
+	PageSize int                     `json:"page_size"`
+	Total    int                     `json:"total"`
+	Token    string                  `json:"token"`
+}
+
+func (l *ListVolume) String() string {
+	return prettify(l)
+}
 
 type RetrieveVolume struct {
 	Bps            int    `json:"bps"`
-	BpsBurst       int    `json:"bps_burst"`
-	BurstPeriod    int    `json:"burst_period"`
-	Capacity       int64  `json:"capacity"`
-	CloneStatus    string `json:"clone_status"`
-	CreateTime     string `json:"create_time"`
-	EcRatio        string `json:"ec_ratio"`
-	Format         string `json:"format"`
 	Iops           int    `json:"iops"`
+	BpsBurst       int    `json:"bps_burst"`
 	IopsBurst      int    `json:"iops_burst"`
-	PoolName       string `json:"pool_name"`
-	RedundancyType string `json:"redundancy_type"`
 	ReplicaNum     int    `json:"replica_num"`
 	SectorSize     int    `json:"sector_size"`
-	Sharding       string `json:"sharding"`
+	BurstPeriod    int    `json:"burst_period"`
 	Used           int64  `json:"used"`
+	Capacity       int64  `json:"capacity"`
 	UUID           string `json:"uuid"`
+	Format         string `json:"format"`
+	EcRatio        string `json:"ec_ratio"`
+	Sharding       string `json:"sharding"`
+	PoolName       string `json:"pool_name"`
 	VolumeName     string `json:"volume_name"`
+	CreateTime     string `json:"create_time"`
+	CloneStatus    string `json:"clone_status"`
+	RedundancyType string `json:"redundancy_type"`
 }
 
 func (r *RetrieveVolume) String() string {
