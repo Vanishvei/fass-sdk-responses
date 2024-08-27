@@ -22,10 +22,28 @@ type SuzakuResponse struct {
 	Message   string      `json:"message"`
 	Data      interface{} `json:"data"`
 	RequestId uuid.UUID   `json:"request_id"`
+	Token     *uuid.UUID  `json:"token"`
+	Total     *int        `json:"total"`
+	PageNum   *int        `json:"page_num"`
+	PageSize  *int        `json:"page_size"`
 }
 
 func (s *SuzakuResponse) String() string {
-	return prettify(s)
+	if s.Token != nil {
+		return prettify(s)
+	}
+
+	return prettify(struct {
+		Code      int         `json:"code"`
+		Message   string      `json:"message"`
+		Data      interface{} `json:"data"`
+		RequestId uuid.UUID   `json:"request_id"`
+	}{
+		Code:      s.Code,
+		Message:   s.Message,
+		Data:      s.Data,
+		RequestId: s.RequestId,
+	})
 }
 
 type RetrievePool struct {
@@ -97,21 +115,56 @@ type RetrieveSubsysVLAN struct {
 }
 
 type volumeSummaryResponse struct {
-	Capacity       int64  `json:"capacity"`
-	ReplicaNum     int    `json:"replica_num"`
-	SectorSize     int    `json:"sector_size"`
-	CloneStatus    string `json:"clone_status"`
-	CreateTime     string `json:"create_time"`
-	EcRatio        string `json:"ec_ratio"`
-	Format         string `json:"format"`
-	PoolName       string `json:"pool_name"`
-	RedundancyType string `json:"redundancy_type"`
-	UUID           string `json:"uuid"`
-	VolumeName     string `json:"volume_name"`
+	Capacity       int64   `json:"capacity"`
+	ReplicaNum     int     `json:"replica_num"`
+	SectorSize     int     `json:"sector_size"`
+	CloneStatus    string  `json:"clone_status"`
+	CreateTime     string  `json:"create_time"`
+	EcRatio        string  `json:"ec_ratio"`
+	Format         string  `json:"format"`
+	PoolName       string  `json:"pool_name"`
+	VolumeName     string  `json:"volume_name"`
+	RedundancyType string  `json:"redundancy_type"`
+	UUID           string  `json:"uuid"`
+	Used           *int64  `json:"used"`
+	BurstPeriod    *int    `json:"burst_period"`
+	IopsBurst      *int    `json:"iops_burst"`
+	BpsBurst       *int    `json:"bps_burst"`
+	Iops           *int    `json:"iops"`
+	Bps            *int    `json:"bps"`
+	Sharding       *string `json:"sharding"`
 }
 
 func (s *volumeSummaryResponse) String() string {
-	return prettify(s)
+	if s.Used != nil {
+		prettify(s)
+	}
+
+	return prettify(struct {
+		Capacity       int64  `json:"capacity"`
+		ReplicaNum     int    `json:"replica_num"`
+		SectorSize     int    `json:"sector_size"`
+		CloneStatus    string `json:"clone_status"`
+		CreateTime     string `json:"create_time"`
+		EcRatio        string `json:"ec_ratio"`
+		Format         string `json:"format"`
+		PoolName       string `json:"pool_name"`
+		VolumeName     string `json:"volume_name"`
+		RedundancyType string `json:"redundancy_type"`
+		UUID           string `json:"uuid"`
+	}{
+		Capacity:       s.Capacity,
+		ReplicaNum:     s.ReplicaNum,
+		SectorSize:     s.SectorSize,
+		CloneStatus:    s.CloneStatus,
+		CreateTime:     s.CreateTime,
+		EcRatio:        s.EcRatio,
+		Format:         s.Format,
+		PoolName:       s.PoolName,
+		VolumeName:     s.VolumeName,
+		RedundancyType: s.RedundancyType,
+		UUID:           s.UUID,
+	})
 }
 
 type ListVolume []volumeSummaryResponse
