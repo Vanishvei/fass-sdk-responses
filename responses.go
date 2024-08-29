@@ -237,7 +237,7 @@ func (s *snapshotDesc) String() string {
 	return prettify(s)
 }
 
-type CreateSnapshot snapshotDesc
+type CreateSnapshot = snapshotDesc
 
 type RetrieveSnapshot = snapshotDesc
 
@@ -253,7 +253,7 @@ func (s *snapshotSummary) String() string {
 	return prettify(s)
 }
 
-type ListSnapshot []snapshotSummary
+type ListSnapshot = []snapshotSummary
 
 type accountInfo struct {
 	AccountName string `json:"account_name"`
@@ -264,11 +264,11 @@ func (a *accountInfo) String() string {
 	return prettify(a)
 }
 
-type ListAccount []accountInfo
+type ListAccount = []accountInfo
 
-type RetrieveAccount accountInfo
+type RetrieveAccount = accountInfo
 
-type CreateAccount accountInfo
+type CreateAccount = accountInfo
 
 type hostGroupInfo struct {
 	GroupName string            `json:"group_name"`
@@ -280,10 +280,10 @@ func (g *hostGroupInfo) String() string {
 	return prettify(g)
 }
 
-type ListHostGroup []hostGroupInfo
+type ListHostGroup = []hostGroupInfo
 
-type ListSubsysOfHostGroup []string
+type ListSubsysOfHostGroup = []string
 
-type AddHostToHostGroup hostGroupInfo
+type AddHostToHostGroup = hostGroupInfo
 
-type RemoveHostFromHostGroup hostGroupInfo
+type RemoveHostFromHostGroup = hostGroupInfo
