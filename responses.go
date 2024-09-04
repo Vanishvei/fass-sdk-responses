@@ -282,8 +282,6 @@ func (g *hostGroupInfo) String() string {
 
 type ListHostGroup = []hostGroupInfo
 
-type ListSubsysOfHostGroup = []string
-
 type AddHostToHostGroup = hostGroupInfo
 
 type RemoveHostFromHostGroup = hostGroupInfo
