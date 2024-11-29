@@ -132,7 +132,6 @@ type volumeSummaryResponse struct {
 	BpsBurst       int    `json:"bps_burst"`
 	Iops           int    `json:"iops"`
 	Bps            int    `json:"bps"`
-	Used           int64  `json:"used"`
 	Capacity       int64  `json:"capacity"`
 	UUID           string `json:"uuid"`
 	Format         string `json:"format"`
