@@ -88,14 +88,15 @@ func (s *subsysVolume) String() string {
 }
 
 type subsysResponse struct {
+	MaxNsID    int            `json:"max_nsid"`
+	Iqn        string         `json:"iqn"`
+	Nqn        string         `json:"nqn"`
+	ISCSI      string         `json:"iSCSI"`
 	NVMeoF     string         `json:"NVMeoF"`
 	SCSIID     string         `json:"SCSI_ID"`
 	CreateTime string         `json:"create_time"`
-	ISCSI      string         `json:"iSCSI"`
-	Iqn        string         `json:"iqn"`
-	MaxNsID    int            `json:"max_nsid"`
-	Nqn        string         `json:"nqn"`
 	SubsysName string         `json:"subsys_name"`
+	VIPList    []string       `json:"vip_list"`
 	VolList    []subsysVolume `json:"vol_list"`
 }
 
